@@ -4,6 +4,8 @@ import requests
 from helpers.data import USER_REGISTRATION_URL
 from helpers.utils import generate_registration_data
 
+from . import constants
+
 
 class TestRegistration:
 
@@ -28,7 +30,7 @@ class TestRegistration:
         }
         response = requests.post(USER_REGISTRATION_URL, data=payload)
         assert response.status_code == 403
-        assert response.json()['message'] == 'User already exists'
+        assert response.json()['message'] == constants.USER_ALREADY_EXISTS
 
 
     @allure.title("Логин с пустыми полями")
@@ -36,4 +38,4 @@ class TestRegistration:
         payload = {}
         response = requests.post(USER_REGISTRATION_URL, data=payload)
         assert response.status_code == 403
-        assert response.json()['message'] == 'Email, password and name are required fields'
+        assert response.json()['message'] == constants.REQUIRED_FIELDS
